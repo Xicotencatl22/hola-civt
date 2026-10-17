@@ -1,0 +1,25 @@
+name: CIVT
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el codigo
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14.3"
+
+      - name: Compilar (verificar sintaxis)
+        run: python -m py_compile main.py test_main.py
+
+      - name: Ejecutar pruebas unitarias
+        run: python -m unittest -v
